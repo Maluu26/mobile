@@ -6,16 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:layout_margin="20dp"
+    android:layout_margin="40dp"
+    android:padding="10dp"
     >
 
     <EditText
         android:id="@+id/salario"
+        android:layout_marginTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/salario_descricao"
+        android:hint="@string/salario_descricao"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="numberDecimal"/>
     <TextView
         android:id="@+id/salario_variavel"
         android:layout_width="wrap_content"
@@ -29,10 +32,11 @@
         android:id="@+id/gastos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/gastos_descricao"
+        android:hint="@string/gastos_descricao"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/salario_variavel"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp"
+        android:inputType="numberDecimal"/>
     <TextView
         android:id="@+id/gastos_descricao"
         android:layout_width="wrap_content"
@@ -46,10 +50,11 @@
         android:id="@+id/dependentes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dependentes_descricao"
+        android:hint="@string/dependentes_descricao"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/gastos_descricao"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp"
+        android:inputType="numberDecimal"/>
     <TextView
         android:id="@+id/dependentes_descricao"
         android:layout_width="wrap_content"
@@ -68,15 +73,31 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="40dp"
         android:text="@string/imposto_title"
+        android:textSize="18sp"
         />
-    <EditText
-        android:id="@+id/input_imposto"
+    <TextView
+        android:id="@+id/cifrao_imposto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/imposto_cifrao"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imposto_title"
+        app:layout_constraintRight_toLeftOf="@id/input_imposto"
+
+        android:textAllCaps="true"
+        android:textSize="28sp"
+        />
+    <TextView
+        android:id="@+id/input_imposto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/cifrao_imposto"
+       app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imposto_title"
+        android:textAllCaps="true"
+        android:textSize="28sp"
+        android:hint="@string/valor"
+        android:inputType="numberDecimal"
         />
     <Button
         android:id="@+id/botao_imposto"

@@ -7,5 +7,7 @@
     <string name="dependentes">Dependentes</string>
     <string name="dependentes_descricao">N° de dependentes</string>
     <string name="imposto_title">SEU IMPOSTO DE RENDA MENSAL:</string>
-    <string name="imposto_cifrao">R$ 0</string>
+    <string name="imposto_cifrao">R$</string>
+    <string name="valor">0</string>
+
 </resources>
