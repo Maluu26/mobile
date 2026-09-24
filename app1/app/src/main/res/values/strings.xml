@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My Application1</string>
+    <string name="salario_mensal">Salário mensal</string>
+    <string name="salario_descricao">Salário (R$)</string>
+    <string name="gastos_saude_educacao">Gastos com saúde e educação</string>
+    <string name="gastos_descricao">Gastos (R$)</string>
+    <string name="dependentes">Dependentes</string>
+    <string name="dependentes_descricao">N° de dependentes</string>
+    <string name="imposto_title">SEU IMPOSTO DE RENDA MENSAL:</string>
+    <string name="imposto_cifrao">R$ 0</string>
+</resources>
