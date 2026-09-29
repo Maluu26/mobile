@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">app2</string>
+    <string name="header">Frases de gatos e cahorros</string>
+    <string name="nome">Digite seu nome</string>
+    <string name="ola">Olá, </string>
+    <string name="frases">...</string>
+</resources>
