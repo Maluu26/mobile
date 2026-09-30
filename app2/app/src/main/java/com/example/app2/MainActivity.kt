@@ -29,6 +29,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
         binding.botaoGuardar.setOnClickListener(this)
         sp = applicationContext.getSharedPreferences("CHAVE_ACESSO", Context.MODE_PRIVATE)
+        if(sp.getString("name", "")!= ""){
+            startActivity(Intent(this, MainActivity2::class.java))
+            finish()
+        }
     }
     override fun onClick(view: View) {
         if (view.id == R.id.botaoGuardar){

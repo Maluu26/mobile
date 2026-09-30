@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
 <ImageView
-
+    android:layout_marginTop="20dp"
+    android:clickable="true"
     android:id="@+id/cachorro"
     android:layout_width="0dp"
     android:layout_height="60dp"
@@ -18,6 +19,8 @@
     android:background="@color/blue"
     />
     <ImageView
+        android:layout_marginTop="20dp"
+        android:clickable="true"
         android:id="@+id/gato"
         android:layout_width="0dp"
         android:layout_height="60dp"
