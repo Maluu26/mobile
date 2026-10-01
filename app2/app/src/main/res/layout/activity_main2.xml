@@ -64,7 +64,8 @@
         app:layout_constraintRight_toLeftOf="@id/name2"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/frases"
+        android:textSize="20sp"
         />
     <TextView
         android:id="@+id/name2"
@@ -74,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@id/cachorro"
         app:layout_constraintLeft_toRightOf="@id/ola"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/frases"
         android:layout_marginLeft="5dp"
         android:textSize="20sp"
         />
