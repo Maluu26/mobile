@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
 <ImageView
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="40dp"
     android:clickable="true"
     android:id="@+id/cachorro"
     android:layout_width="0dp"
@@ -19,17 +19,41 @@
     android:background="@color/blue"
     />
     <ImageView
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:clickable="true"
         android:id="@+id/gato"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:src="@drawable/branquinho"
         app:layout_constraintLeft_toRightOf="@id/cachorro"
+        app:layout_constraintRight_toLeftOf="@id/jabuti"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/blue"
+        />
+    <ImageView
+        android:layout_marginTop="40dp"
+        android:clickable="true"
+        android:id="@+id/jabuti"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:src="@drawable/juju"
+        app:layout_constraintLeft_toRightOf="@id/gato"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/blue"
+
+        />
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:id="@+id/botaoVoltar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/outline_arrow_back_24"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cachorro"
+
         />
     <TextView
         android:id="@+id/ola"
@@ -64,6 +88,9 @@
         app:layout_constraintBottom_toTopOf="@id/botaoFrase"
         android:textSize="20sp"
         android:text="@string/frases"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:textAlignment="center"
         />
     <Button
         android:id="@+id/botaoFrase"
@@ -71,11 +98,11 @@
         android:layout_height="wrap_content"
         android:hint="Gerar outra frase"
         android:textColorHint="@color/white"
-        android:backgroundTint="@color/light_blue"
+        android:backgroundTint="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:cornerRadius="0dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="50dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

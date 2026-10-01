@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
         binding.botaoGuardar.setOnClickListener(this)
         sp = applicationContext.getSharedPreferences("CHAVE_ACESSO", Context.MODE_PRIVATE)
+
         if(sp.getString("name", "")!= ""){
             startActivity(Intent(this, MainActivity2::class.java))
             finish()
@@ -36,12 +38,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
     override fun onClick(view: View) {
         if (view.id == R.id.botaoGuardar){
-            if (binding.name.text != null){
+            val nome = binding.name.text.toString()
+            if (binding.name.text != null && nome.length>=3){
                 sp.edit().putString("name", binding.name.text.toString()).apply()
                 startActivity(Intent(this, MainActivity2::class.java))
                 finish()
 
+            }else{
+                val erro = R.string.erro_nome
+                Toast.makeText(applicationContext,erro, Toast.LENGTH_LONG).show()
             }
+
         }
     }
 
