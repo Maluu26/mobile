@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="header">Frases de gatos y perros</string>
+<string name="nome">Ingresa tu nombre</string>
+<string name="ola">Hola, </string>
+<string name="frases">...</string>
+<string name="erro_nome"> Nombre muy corto. Mínimo de 3 caracteres</string>
+</resources>

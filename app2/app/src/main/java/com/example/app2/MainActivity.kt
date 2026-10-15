@@ -10,12 +10,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import com.example.app2.databinding.ActivityMainBinding
+import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-
     private lateinit var binding : ActivityMainBinding;
     private lateinit var sp: SharedPreferences;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
