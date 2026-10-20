@@ -1,0 +1,4 @@
+package MV
+
+class MainViewACtivity {
+}
