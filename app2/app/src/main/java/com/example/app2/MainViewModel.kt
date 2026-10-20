@@ -2,11 +2,19 @@ package com.example.app2
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.app2.clients.ClientService
+import com.example.app2.entities.curiosidadeCachorro
+import com.example.app2.entities.curiosidadeGatos
 import com.example.app2.objects.curiosidades
+import com.example.app2.service.curiosidadesCachorroService
+import com.example.app2.service.curiosidadesGatosService
+import retrofit2.Call
+import retrofit2.Response
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val sp = application.getSharedPreferences("CHAVE_ACESSO", Context.MODE_PRIVATE)
@@ -39,12 +47,62 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun buscarNovaFrase() {
         val novaFrase = when (_animalSelecionado.value) {
-            ("Belinha") -> curiosidades.getCuriosidadeBelinha()
-            ("Branquinho") -> curiosidades.getCuriosidadesBranquinho()
+            ("Belinha") -> requestPostBelinha()
+            ("Branquinho") -> requestPostBranquinho()
             ("Juju") -> curiosidades.getCuriosidadesJuju()
             else -> "..."
         }
-        _fraseAtual.value = novaFrase
+    }
+
+    fun requestPostBranquinho(){
+        val  apiCuriosidadeGatos = ClientService.createCatService(curiosidadesGatosService::class.java)
+        val curiosidadeGatos: Call<curiosidadeGatos> = apiCuriosidadeGatos.getCatFact()
+        curiosidadeGatos.enqueue(object: retrofit2.Callback<curiosidadeGatos> {
+            override fun onResponse(
+                call: Call<curiosidadeGatos>,
+                response: Response<curiosidadeGatos>
+            ) {
+                if(response.isSuccessful){
+                    _fraseAtual.value = response.body()?.fact}
+                else {
+                    // Erros HTTP (ex: 404 Not Found, 500 Internal Server Error)
+                    val erroHttp = "Erro HTTP: ${response.code()}"
+                    Log.e("RetrofitDebug", "Erro na resposta: ${response.errorBody()?.string()}")
+                    _fraseAtual.value = erroHttp
+                }
+            }
+
+            override fun onFailure(call: Call<curiosidadeGatos>, t: Throwable) {
+               _fraseAtual.value = "Falha na requisição da API"
+                Log.e("RetrofitDebug", "Falha crítica: ${t.message}", t)
+            }
+        })
+    }
+    fun requestPostBelinha(){
+        val  apicuriosidadeCachorros = ClientService.createDogService(
+            curiosidadesCachorroService::class.java)
+        val curiosidadeCachorro: Call<curiosidadeCachorro> = apicuriosidadeCachorros.getDogFact()
+        curiosidadeCachorro.enqueue(object: retrofit2.Callback<curiosidadeCachorro> {
+            override fun onResponse(
+                call: Call<curiosidadeCachorro>,
+                response: Response<curiosidadeCachorro>
+            ) {
+                if(response.isSuccessful){
+
+                    _fraseAtual.value = response.body()?.facts[0]}
+                else {
+                    // Erros HTTP (ex: 404 Not Found, 500 Internal Server Error)
+                    val erroHttp = "Erro HTTP: ${response.code()}"
+                    Log.e("RetrofitDebug", "Erro na resposta: ${response.errorBody()?.string()}")
+                    _fraseAtual.value = erroHttp
+                }
+            }
+
+            override fun onFailure(call: Call<curiosidadeCachorro>, t: Throwable) {
+                _fraseAtual.value = "Falha na requisição da API"
+                Log.e("RetrofitDebug", "Falha crítica: ${t.message}", t)
+            }
+        })
     }
     fun removerFraseAtual(){
         _fraseAtual.value?.let { curiosidades.removeCuriosidades(it) }
