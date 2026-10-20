@@ -1,30 +1,23 @@
 package com.example.app2
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.app2.databinding.ActivityMain2Binding
-import kotlin.random.Random
-import com.example.app2.objects.curiosidades
 class MainActivity2 : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener {
 
     private lateinit var binding : ActivityMain2Binding;
 
-    private lateinit var sp: SharedPreferences;
-
-    private var opcao: String? = "Belinha"
-
     val matrix = ColorMatrix().apply { setSaturation(0f) }
+
+    private lateinit var mainVM : MainViewModel;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,98 +32,63 @@ class MainActivity2 : AppCompatActivity(), View.OnClickListener, View.OnLongClic
         setContentView(binding.root)
         binding.botaoFrase.setOnClickListener(this)
         binding.frases.setOnLongClickListener(this)
+        binding.gato.setOnClickListener(this)
+        binding.cachorro.setOnClickListener(this)
+        binding.jabuti.setOnClickListener(this)
+        binding.botaoVoltar.setOnClickListener(this)
 
-        sp = applicationContext.getSharedPreferences("CHAVE_ACESSO", Context.MODE_PRIVATE)
-
-        if(applicationContext.getSharedPreferences("animal", Context.MODE_PRIVATE)!=null){
-            opcao = sp.getString("animal", "")
-        }
-        binding.name2.text = sp.getString("name", "")
-
-        val branquinho = findViewById<ImageView>(R.id.gato)
-
-        val belinha = findViewById<ImageView>(R.id.cachorro)
-
-        val jabuti = findViewById<ImageView>(R.id.jabuti)
-
-        val voltar = findViewById<ImageView>(R.id.botaoVoltar)
-
-        if(opcao == "Belinha"){
-            binding.frases.text = curiosidades.getCuriosidadeBelinha()
-            belinha.colorFilter  = ColorMatrixColorFilter(matrix)
-        }
-        else if(opcao == "Branquinho"){
-            binding.frases.text = curiosidades.getCuriosidadesBranquinho()
-            branquinho.colorFilter  = ColorMatrixColorFilter(matrix)
-        }
-        else if(opcao == "Juju"){
-            binding.frases.text = curiosidades.getCuriosidadesJuju()
-            jabuti.colorFilter  = ColorMatrixColorFilter(matrix)
-        }
-
-        belinha.setOnClickListener {
-            opcao = "Belinha"
-            sp.edit().putString("animal", opcao).apply()
-            branquinho.colorFilter = null
-            jabuti.colorFilter = null
-            belinha.colorFilter  = ColorMatrixColorFilter(matrix)
-            binding.frases.text = curiosidades.getCuriosidadeBelinha()
+        mainVM = ViewModelProvider(this).get(MainViewModel::class.java)
+        observers()
+        val nome = mainVM.getNomeUsuario()
+    }
+    private fun observers(){
+        mainVM.fraseAnimais().observe(this){ novaFrase ->
+            binding.frases.text = novaFrase
 
         }
-        branquinho.setOnClickListener {
-            opcao = "Branquinho"
-            sp.edit().putString("animal", opcao).apply()
-            belinha.colorFilter = null
-            jabuti.colorFilter = null
-            branquinho.colorFilter  = ColorMatrixColorFilter(matrix)
-            binding.frases.text = curiosidades.getCuriosidadesBranquinho()
+        mainVM.animalSelecionado.observe(this){ novoAnimal ->
+            atualizaFiltros(novoAnimal)
 
         }
-        jabuti.setOnClickListener {
-            opcao = "Juju"
-            sp.edit().putString("animal", opcao).apply()
-            branquinho.colorFilter = null
-            belinha.colorFilter = null
-            jabuti.colorFilter  = ColorMatrixColorFilter(matrix)
-            binding.frases.text = curiosidades.getCuriosidadesJuju()
+        mainVM.nome().observe(this){ novoNome ->
+            binding.name2.text = novoNome
         }
 
-        voltar.setOnClickListener {
-            sp.edit().putString("name", "").apply()
+    }
+    private fun atualizaFiltros(animalSelecionado: String){
+        binding.gato.colorFilter = null
+        binding.cachorro.colorFilter = null
+        binding.jabuti.colorFilter = null
+
+        when(animalSelecionado){
+            "Belinha" -> binding.cachorro.colorFilter = ColorMatrixColorFilter(matrix)
+            "Branquinho" -> binding.gato.colorFilter = ColorMatrixColorFilter(matrix)
+            "Juju" -> binding.jabuti.colorFilter = ColorMatrixColorFilter(matrix)
+        }
+    }
+    override fun onClick(view: View) {
+        if(view.id == R.id.botaoFrase){
+           mainVM.buscarNovaFrase()
+        }
+        else if(view.id == R.id.gato){
+            mainVM.selecionarAnimal("Branquinho")
+        }
+        else if(view.id == R.id.cachorro){
+            mainVM.selecionarAnimal("Belinha")
+        }
+        else if(view.id == R.id.jabuti){
+            mainVM.selecionarAnimal("Juju")
+        }
+        else if(view.id == R.id.botaoVoltar){
+            mainVM.limparUsuario()
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }
 
-    override fun onClick(view: View) {
-
-        if(view.id == R.id.botaoFrase){
-            if(opcao == "Belinha"){
-                binding.frases.text = curiosidades.getCuriosidadeBelinha()
-            }
-            else if(opcao == "Branquinho"){
-                binding.frases.text = curiosidades.getCuriosidadesBranquinho()
-            }
-            else if(opcao == "Juju"){
-                binding.frases.text = curiosidades.getCuriosidadesJuju()
-            }
-        }
-
-        }
-
     override fun onLongClick(view: View?): Boolean {
         if(view?.id == R.id.frases){
-            val remove =binding.frases.text.toString()
-            if(opcao == "Belinha"){
-                binding.frases.text = curiosidades.getCuriosidadeBelinha()
-            }
-            else if(opcao == "Branquinho"){
-                binding.frases.text = curiosidades.getCuriosidadesBranquinho()
-            }
-            else if(opcao == "Juju"){
-                binding.frases.text = curiosidades.getCuriosidadesJuju()
-            }
-            curiosidades.removeCuriosidades(remove)
+            mainVM.removerFraseAtual()
             return true
         }
         return false
