@@ -64,6 +64,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
            "Mato Grosso" ->"Cuiabá"
            "Mato Grosso do Sul" ->"Campo Grande"
            "Goiás" ->"Goiânia"
+           "Distrito Federal" -> "Brasília"
             else -> "..."
         }
 
@@ -95,7 +96,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             "SC", "Santa Catarina" -> R.drawable.bandeira_santa_catarina
             "SP", "São Paulo" -> R.drawable.bandeira_sao_paulo
             "SE", "Sergipe" -> R.drawable.bandeira_sergipe
-            "TO", "Tocantins", "Tocantis" -> R.drawable.bandeira_tocantins
+            "TO", "Tocantins" -> R.drawable.bandeira_tocantins
+            "DF", "Distrito Federal" -> R.drawable.bandeira_distrito_federal__brasil_
             else -> R.drawable.pin
         }
     }
@@ -127,6 +129,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             "SP", "São Paulo" -> R.drawable.mapa_sp
             "SE", "Sergipe" -> R.drawable.mapa_se
             "TO", "Tocantins" -> R.drawable.mapa_to
+            "DF", "Distrito Federal" -> R.drawable.mapa_df
             else -> R.drawable.pin
         }
     }

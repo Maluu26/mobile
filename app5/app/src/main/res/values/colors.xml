@@ -10,4 +10,5 @@
     <color name="text_primary">#1A1C1E</color>
     <color name="text_hint">#8A919E</color>
     <color name="border_edit_text">#6E98D7</color>
+    <color name="branco2">#F5F5F5</color>
 </resources>
