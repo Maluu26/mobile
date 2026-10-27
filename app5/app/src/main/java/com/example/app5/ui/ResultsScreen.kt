@@ -1,6 +1,7 @@
 package com.example.app5.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -10,7 +11,7 @@ import com.example.app5.databinding.ActivityResultsScreenBinding
 import com.example.app5.dto.CepDto
 import com.example.app5.mainModelView.MainViewModel
 
-class ResultsScreen : AppCompatActivity() {
+class ResultsScreen : AppCompatActivity(), View.OnClickListener {
     private lateinit var bindingInfos: ActivityResultsScreenBinding
     private lateinit var mainVM: MainViewModel;
 
@@ -26,7 +27,7 @@ class ResultsScreen : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        bindingInfos.arrowBack.setOnClickListener(this)
         @Suppress("DEPRECATION")
         val cep = intent.getSerializableExtra("EXTRA_CEP_DTO") as? CepDto
 
@@ -56,6 +57,12 @@ class ResultsScreen : AppCompatActivity() {
         mainVM.capitalSelecionado().observe(this){
             capital ->
             bindingInfos.capitalValue.text = capital
+        }
+    }
+
+    override fun onClick(view: View) {
+        if(view.id == R.id.arrowBack){
+            finish()
         }
     }
 }

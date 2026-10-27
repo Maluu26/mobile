@@ -158,7 +158,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
                 if (response.isSuccessful && response.body()!!.cep != "") {
                     cepInfo.value = CepDto(response.body()!!.cep, response.body()!!.logradouro ?: "-",
-                        response.body()!!.complemento ?: "-", response.body()!!.unidade ?: "-", response.body()!!.bairro,
+                        response.body()!!.complemento, response.body()!!.unidade ?: "-", response.body()!!.bairro,
                         response.body()!!.localidade ?: "-", response.body()!!.uf, response.body()!!.estado,
                         response.body()!!.regiao ?: "-", response.body()!!.ibge, response.body()!!.gia,
                         response.body()!!.ddd, response.body()!!.siafi)
