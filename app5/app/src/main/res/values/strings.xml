@@ -1,6 +1,31 @@
 <resources>
+    <string name="app">Cep Finder</string>
     <string name="app_name">app5</string>
     <string name="botaoCEP">Consultar</string>
     <string name="digite">Digite o seu cep</string>
-    <string name="instrucoes">Consulte o endereço e veja em qual estado você está</string>
+    <string name="instrucoes">Consulte o endereço e veja em qual estado você está.</string>
+    <string name="cepInvalido">Tamanho Inváilido de Cep. Tente novamente!</string>
+    <string name="cep">Cep</string>
+    <string name="cepValue">-</string>
+    <string name="logradouro">Logradouro</string>
+    <string name="logradouroValue">-</string>
+    <string name="complem">Complemento</string>
+    <string name="complemValue">-</string>
+    <string name="bairro">Bairro</string>
+    <string name="bairroValue">-</string>
+    <string name="cidade">Cidade</string>
+    <string name="cidadeValue">-</string>
+    <string name="uf">Estado</string>
+    <string name="ufValue">-</string>
+    <string name="regiao">Região</string>
+    <string name="regiaoValue">-</string>
+    <string name="capital">Capital</string>
+    <string name="capitalValue">-</string>
+    <string name="ddd">DDD</string>
+    <string name="dddValue">-</string>
+    <string name="codigoIBGE">Código IBGE</string>
+    <string name="codigoIBGEValue">-</string>
+    <string name="endereco">Endereço</string>
+    <string name="infos">Informações Adicionais</string>
+    <string name="estadoValue">-</string>
 </resources>

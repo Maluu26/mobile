@@ -7,9 +7,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ClienteRetrofit {
     companion object {
         private lateinit var INSTANCE: Retrofit
-        private const val BASE_URL = "https://viacep.com.br/"
+        private const val BASE_URL = "https://viacep.com.br/ws/"
 
-        private fun getClientInstance(): Retrofit {
+        private val client: OkHttpClient by lazy {
+            OkHttpClient.Builder()
+                .build()
+        }
+
+        private val retrofit: Retrofit by lazy {
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
+        /*private fun getClientInstance(): Retrofit {
             val http = OkHttpClient.Builder()
             if (!::INSTANCE.isInitialized) {
                 INSTANCE = Retrofit.Builder()
@@ -19,10 +31,10 @@ class ClienteRetrofit {
                     .build()
             }
             return INSTANCE
-        }
+        }*/
 
         fun <S> createService(className: Class<S>): S {
-            return getClientInstance().create(className)
+            return retrofit.create(className)
         }
     }
 }

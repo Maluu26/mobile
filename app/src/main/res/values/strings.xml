@@ -1,0 +1,7 @@
+<resources>
+   <string name="name">First name</string>
+    <string name="middle_name">Middle name</string>
+    <string name="last_name">Last name</string>
+    <string name="full_name_caption">Your full name is</string>
+    <string name="full_name">...</string>
+</resources>

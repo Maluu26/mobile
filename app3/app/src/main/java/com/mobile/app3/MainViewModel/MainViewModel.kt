@@ -37,7 +37,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
             override fun onFailure(call: Call<Post>, t: Throwable) {
                 postAtual.value = "Falha na requisição da API"
-                Log.e("RetrofitDebug", "Falha crítica na requisição", t)
+                Log.e("RetrofitDebug", "Falha crítica: ${t.message}", t)
             }
         })
     }

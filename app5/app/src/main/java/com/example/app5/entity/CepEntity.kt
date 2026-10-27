@@ -1,7 +1,9 @@
 package com.example.app5.entity
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 class CepEntity {
     @SerializedName("cep")
     val cep: String = ""
@@ -11,13 +13,13 @@ class CepEntity {
     val complemento: String = ""
     @SerializedName("unidade")
     val unidade: String = ""
-    @SerializedName("unidade")
-    val  bairro: String = ""
     @SerializedName("bairro")
-    val localidade: String = "localidade"
+    val  bairro: String = ""
+    @SerializedName("localidade")
+    val localidade: String = ""
     @SerializedName("uf")
     val uf: String = ""
-    @SerializedName("unidade")
+    @SerializedName("estado")
     val estado: String = ""
     @SerializedName("regiao")
     val regiao: String = ""
@@ -29,13 +31,5 @@ class CepEntity {
     val ddd: String = ""
     @SerializedName("siafi")
     val siafi: String = ""
-
-
-
-
-
-
-
-
 
 }

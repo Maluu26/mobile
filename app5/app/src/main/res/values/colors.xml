@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="azul_marinho">#000080</color>
+    <color name = "subtom">#277DF5</color>
+    <color name="bg_app_light">#F5F7FA</color>
+    <color name="bg_edit_text">#EDEDED</color>
+    <color name="navbar_bg">#000080</color>
+    <color name="text_primary">#1A1C1E</color>
+    <color name="text_hint">#8A919E</color>
+    <color name="border_edit_text">#6E98D7</color>
 </resources>
