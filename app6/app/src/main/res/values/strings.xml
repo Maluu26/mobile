@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">app6</string>
+    <string name="p_nome"></string>
+    <string name="p_valor"></string>
+    <string name="p_disp"></string>
+    <string name="nome">Nome:</string>
+    <string name="valor">Valor:</string>
+    <string name="disp">Quantidade:</string>
+    <string name="cadastra">Cadatrar Produto</string>
+    <string name="ListaProd">Produtos</string>
+</resources>
