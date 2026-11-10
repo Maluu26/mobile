@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.mobile.app_pokemon.Repository.FavoritosRepository
 import com.mobile.app_pokemon.data.entity.Pokemon
 import com.mobile.app_pokemon.data.room.AppDatabase
 
@@ -16,14 +17,13 @@ class PokemonViewModel(application: Application) : AndroidViewModel(application)
 
     private var _savedMsg = MutableLiveData<Int>()
     val savedMsg: LiveData<Int> get() = _savedMsg
-    val db = AppDatabase.getDatabase(getApplication()).PokemonDao()
-
+    val favApi = FavoritosRepository(getApplication())
     fun adjustFav(id: Long){
-        var resp: Pokemon?
+        var resp: Boolean
         try {
-            resp = db.getPokemonById(id)
+            resp = favApi.ehFavorito(id)
 
-            if(resp != null){
+            if(resp == true){
                 _isFav.value = true
                 _savedMsg.value = 1
             }else{
@@ -38,11 +38,11 @@ class PokemonViewModel(application: Application) : AndroidViewModel(application)
     }
     fun alternateFilled(id: Long, name: String, url: String){
         if(_isFav.value==true){
-            db.deleteById(id)
+            favApi.remover(id)
             _isFav.value = false
         }else
         {   val p = Pokemon(id, name, url, true)
-            db.insert(p)
+            favApi.adicionar(p)
             _isFav.value = true
         }
 

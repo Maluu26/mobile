@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.mobile.app_pokemon.Repository.FavoritosRepository
+import com.mobile.app_pokemon.Repository.PokemonRepository
 import com.mobile.app_pokemon.client.Cliente
 import com.mobile.app_pokemon.data.entity.Pokemon
 import com.mobile.app_pokemon.data.room.AppDatabase
@@ -40,7 +42,27 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     fun detalhesAbertos() {
         _pokemonDetails.value = null
     }
+    private val api = PokemonRepository(getApplication())
+
+    private val favApi = FavoritosRepository(getApplication())
+
     fun requestPokemonList(limit: Int = 30) {
+        if (carregando) return
+        carregando = true
+
+        api.requestPokemonList(limit, offset,
+            onSucesso = { novos ->
+                carregando = false
+                listaAcumulada.addAll(novos)
+                offset += novos.size
+                _pokemonList.value = listaAcumulada.toList()
+            },
+            onErro = { msg ->
+                carregando = false
+                _errorMessage.value = msg
+            })
+    }
+   /* fun requestPokemonList(limit: Int = 30) {
         if (carregando) return
         carregando = true
 
@@ -89,26 +111,47 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             }
         })
     }
+    */
+   fun requestPokemon(name: String) {
+       val nome = name.lowercase().trim()
+       if (nome.isEmpty()) {
+           _errorMessage.value = "Digite o nome de um Pokémon"
+           return
+       }
+       api.requestPokemon(
+           nome,
+           onSucesso = { pokemonDetalhado ->
+               _pokemonDetails.value = pokemonDetalhado
+           },
 
-    fun getFavoritePokemons(){
-            val db =  AppDatabase.getDatabase(getApplication()).PokemonDao()
-            var resp: List<Pokemon>?
-            try {
-                resp = db.getFavoritePokemons()
-                if(resp == null){
-                    _savedMessage.value = 2
-                }else{
-                    _favList.value = resp
-                    _savedMessage.value = 1
-                }
-            }catch(e: SQLiteConstraintException){
-                _savedMessage.value = 3
-            }
-        }
+           onErro = { msg ->
+               _errorMessage.value = msg
 
-    fun removeFilled(id: Long){
-            db.deleteById(id)
-            getFavoritePokemons()
-    }
+           }
+
+
+       )
+   }
+       fun getFavoritePokemons() {
+
+           var resp: List<Pokemon>?
+           try {
+               resp = favApi.listar()
+               if (resp == null) {
+                   _savedMessage.value = 2
+               } else {
+                   _favList.value = resp
+                   _savedMessage.value = 1
+               }
+           } catch (e: SQLiteConstraintException) {
+               _savedMessage.value = 3
+           }
+       }
+
+       fun removeFilled(id: Long) {
+           favApi.remover(id)
+           getFavoritePokemons()
+       }
+
 }
 
