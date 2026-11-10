@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.app_pokemon.data.entity.Pokemon
 import com.mobile.app_pokemon.databinding.ListaFavoritosBinding
+import com.mobile.app_pokemon.listener.OnFavoritesListener
 import com.mobile.app_pokemon.listener.OnPokemonListener
 import com.mobile.app_pokemon.viewHolder.FavoritesViewHolder
 
 
 class FavoritesAdapter : RecyclerView.Adapter<FavoritesViewHolder>(){
-    private lateinit var listener: OnPokemonListener;
+    private lateinit var listener: OnFavoritesListener;
     private var pokemonList: List<Pokemon> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
@@ -32,7 +33,7 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesViewHolder>(){
         pokemonList = list
         notifyDataSetChanged()
     }
-    fun setListener(pokemonListener: OnPokemonListener) {
+    fun setListener(pokemonListener: OnFavoritesListener) {
         listener = pokemonListener
     }
 }

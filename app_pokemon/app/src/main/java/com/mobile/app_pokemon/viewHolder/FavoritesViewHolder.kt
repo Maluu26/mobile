@@ -8,20 +8,23 @@ import com.mobile.app_pokemon.data.entity.Pokemon
 import com.mobile.app_pokemon.databinding.ListPokemonsBinding
 import com.mobile.app_pokemon.databinding.ListaFavoritosBinding
 import com.mobile.app_pokemon.entity.PokemonEntity;
+import com.mobile.app_pokemon.listener.OnFavoritesListener
 import com.mobile.app_pokemon.listener.OnPokemonListener;
 
-class FavoritesViewHolder(private val binding: ListaFavoritosBinding, private val listener: OnPokemonListener) : RecyclerView.ViewHolder(binding.root){
+class FavoritesViewHolder(private val binding: ListaFavoritosBinding, private val listener: OnFavoritesListener) : RecyclerView.ViewHolder(binding.root){
 
     fun bindVH(poke: Pokemon){
         binding.name.text = poke.nome
-        val color = ContextCompat.getColor(binding.root.context, R.color.red)
-        binding.isFav.setColorFilter(color)
+        binding.isFav.setImageResource(R.drawable.filled_heart)
         Glide.with(itemView.context)
             .load(poke.url)
             .placeholder(R.drawable.pokeball_pokemon_svgrepo_com)
             .error(R.drawable.diamond_svgrepo_com)
             .into(binding.pokeImg)
         binding.root.setOnClickListener {
+            listener.onClick(poke)
+        }
+        binding.isFav.setOnClickListener {
             listener.onClickFav(poke)
         }
 

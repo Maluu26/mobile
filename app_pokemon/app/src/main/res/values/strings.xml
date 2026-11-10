@@ -7,4 +7,10 @@
     <string name="nome"></string>
     <string name="favs">Meus Favoritos</string>
     <string name="all_pokes">Lista de pokemons</string>
+    <string name="stat_hp">PS:</string>
+    <string name="stat_ataque">Ataque:</string>
+    <string name="stat_defesa">Defesa:</string>
+    <string name="stat_atq_es">Atq. Es.:</string>
+    <string name="stat_def_es">Def. Es.:</string>
+    <string name="stat_velocidade">Velocidade:</string>
 </resources>

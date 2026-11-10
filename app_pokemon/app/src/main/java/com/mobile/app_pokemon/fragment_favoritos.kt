@@ -19,6 +19,7 @@ import com.mobile.app_pokemon.data.entity.Pokemon
 import com.mobile.app_pokemon.databinding.FragmentAllPokemonsBinding
 import com.mobile.app_pokemon.databinding.FragmentFavoritosBinding
 import com.mobile.app_pokemon.entity.PokemonEntity
+import com.mobile.app_pokemon.listener.OnFavoritesListener
 import com.mobile.app_pokemon.listener.OnPokemonListener
 import com.mobile.app_pokemon.viewModel.MainActivityViewModel
 import kotlin.getValue
@@ -43,21 +44,24 @@ class fragment_favoritos : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getFavoritePokemons()
         setupRecyclerView()
         observeViewModel()
 
     }
+    override fun onResume() {
+        super.onResume()
+        viewModel.getFavoritePokemons()
+    }
     private fun setupRecyclerView() {
         adapter = FavoritesAdapter()
 
-        adapter.setListener(object : OnPokemonListener {
-            override fun onClick(p: PokemonEntity) {
-                TODO("Not yet implemented")
+        adapter.setListener(object : OnFavoritesListener {
+            override fun onClick(p: Pokemon) {
+                viewModel.requestPokemon(p.nome)
             }
 
             override fun onClickFav(p: Pokemon) {
-                viewModel.getFavoritePokemons()
+                viewModel.removeFilled(p.id)
             }
         })
         binding.recyclerListPokemons.layoutManager = LinearLayoutManager(requireContext())
@@ -68,7 +72,20 @@ class fragment_favoritos : Fragment() {
         viewModel.favList.observe(viewLifecycleOwner) { lista ->
             adapter.updatepokemonList(lista)
         }
-
+        viewModel.pokemonDetails.observe(viewLifecycleOwner) { poke ->
+            if (poke == null) return@observe
+            val intent = Intent(requireContext(), tela_pokemon::class.java).apply {
+                putExtra("Name", poke.name)
+                putExtra("Id", poke.id)
+                putExtra("Types", poke.types.joinToString(", ") { it.type.name })
+                putExtra(
+                    "Stats",
+                    poke.stats.joinToString(", ") { "${it.stat.name}: ${it.baseStat}" })
+                putExtra("ImageUrl", poke.sprites.other.officialArtwork.frontDefault)
+            }
+            startActivity(intent)
+            viewModel.detalhesAbertos()
+        }
         viewModel.errorMessage.observe(viewLifecycleOwner) { msg ->
             Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
         }

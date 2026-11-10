@@ -6,4 +6,17 @@
     <color name="search_header">#D7A1A3</color>
     <color name="light_green">#C5F2A6</color>
     <color name="red">#FFD700</color>
+    <!-- tela de detalhes: fundo da linha / cor da barra de cada stat -->
+    <color name="stat_hp_fundo">#EE6B62</color>
+    <color name="stat_hp">#E3302A</color>
+    <color name="stat_ataque_fundo">#F2A26B</color>
+    <color name="stat_ataque">#EE8130</color>
+    <color name="stat_defesa_fundo">#F7DD80</color>
+    <color name="stat_defesa">#F2CF4E</color>
+    <color name="stat_atq_es_fundo">#A4B8EE</color>
+    <color name="stat_atq_es">#6C8BE6</color>
+    <color name="stat_def_es_fundo">#ADD989</color>
+    <color name="stat_def_es">#7CC24F</color>
+    <color name="stat_velocidade_fundo">#EF97AE</color>
+    <color name="stat_velocidade">#E8648A</color>
 </resources>
