@@ -5,19 +5,16 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Pokemons")
-class Pokemon {
+class Pokemon(
+    @PrimaryKey
+    var id: Long = 0L,
 
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
+    @ColumnInfo(name = "nome")
+    var nome: String = "",
 
+    @ColumnInfo(name = "url")
+    var url: String = "",
 
-    @ColumnInfo(name="nome")
-    var nome: String = ""
-
-    @ColumnInfo(name="url")
-    var url:  String = ""
-
-
-
-}
-
+    @ColumnInfo(name = "favorito")
+    var favorito: Boolean = false
+)

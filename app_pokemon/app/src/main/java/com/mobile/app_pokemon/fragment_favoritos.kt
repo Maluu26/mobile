@@ -1,61 +1,77 @@
 package com.mobile.app_pokemon
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [fragment_favoritos.newInstance] factory method to
- * create an instance of this fragment.
- */
-
-
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.mobile.app_pokemon.UI.tela_pokemon
+import com.mobile.app_pokemon.adapter.FavoritesAdapter
+import com.mobile.app_pokemon.adapter.PokemonAdapter
+import com.mobile.app_pokemon.data.entity.Pokemon
+import com.mobile.app_pokemon.databinding.FragmentAllPokemonsBinding
+import com.mobile.app_pokemon.databinding.FragmentFavoritosBinding
+import com.mobile.app_pokemon.entity.PokemonEntity
+import com.mobile.app_pokemon.listener.OnPokemonListener
+import com.mobile.app_pokemon.viewModel.MainActivityViewModel
+import kotlin.getValue
 
 class fragment_favoritos : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var _binding: FragmentFavoritosBinding
+    private val binding get() = _binding
+
+    private lateinit var adapter: FavoritesAdapter
+
+    private val viewModel: MainActivityViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFavoritosBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getFavoritePokemons()
+        setupRecyclerView()
+        observeViewModel()
 
-        super.onCreateView(inflater, container, savedInstanceState)
-        val fragView = inflater.inflate(R.layout.fragment_favoritos, container, false)
-        return fragView;}
+    }
+    private fun setupRecyclerView() {
+        adapter = FavoritesAdapter()
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_favoritos.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            fragment_favoritos().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        adapter.setListener(object : OnPokemonListener {
+            override fun onClick(p: PokemonEntity) {
+                TODO("Not yet implemented")
             }
+
+            override fun onClickFav(p: Pokemon) {
+                viewModel.getFavoritePokemons()
+            }
+        })
+        binding.recyclerListPokemons.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerListPokemons.adapter = adapter
+    }
+
+    private fun observeViewModel() {
+        viewModel.favList.observe(viewLifecycleOwner) { lista ->
+            adapter.updatepokemonList(lista)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { msg ->
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+        }
+
     }
 }

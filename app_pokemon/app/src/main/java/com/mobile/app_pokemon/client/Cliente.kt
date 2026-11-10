@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class Cliente {
     companion object {
         private lateinit var INSTANCE: Retrofit
-        private const val BASE_URL = "https://pokeapi.co/api/v2/pokemon"
+        private const val BASE_URL = "https://pokeapi.co/api/v2/"
 
         private val client: OkHttpClient by lazy {
             OkHttpClient.Builder()

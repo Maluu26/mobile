@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toTopOf="@id/view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingBottom="?attr/actionBarSize"
+        android:clipToPadding="false"
         android:layout_marginTop="30dp"
 
 

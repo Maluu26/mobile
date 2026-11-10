@@ -8,7 +8,7 @@ android {
     compileSdk {
         version = release(37)
     }
-3
+
     defaultConfig {
         applicationId = "com.mobile.app_pokemon"
         minSdk = 34
@@ -44,6 +44,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation("com.google.code.gson:gson:2.14.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("androidx.activity:activity-ktx:1.9.3")
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)

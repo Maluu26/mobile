@@ -5,4 +5,5 @@
     <color name="splash">#CA9799</color>
     <color name="search_header">#D7A1A3</color>
     <color name="light_green">#C5F2A6</color>
+    <color name="red">#FFD700</color>
 </resources>

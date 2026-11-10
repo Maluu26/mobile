@@ -28,12 +28,14 @@
         android:background="@drawable/bg_editext"
         android:padding="14dp"
         android:hint="@string/hint_busca"
+        android:inputType="text"
         android:textColorHint="@color/search_header"
         />
     <Button
+        android:id="@+id/busca_botao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_botao"
+        android:text="@string/hint_botao"
         app:layout_constraintTop_toBottomOf="@id/poke_busca"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

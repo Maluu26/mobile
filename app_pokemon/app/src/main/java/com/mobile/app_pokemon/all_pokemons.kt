@@ -1,59 +1,84 @@
 package com.mobile.app_pokemon
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import com.mobile.app_pokemon.UI.tela_pokemon
+import com.mobile.app_pokemon.adapter.PokemonAdapter
+import com.mobile.app_pokemon.databinding.FragmentAllPokemonsBinding
+import com.mobile.app_pokemon.entity.PokemonEntity
+import com.mobile.app_pokemon.listener.OnPokemonListener
+import com.mobile.app_pokemon.viewModel.MainActivityViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [all_pokemons.newInstance] factory method to
- * create an instance of this fragment.
- */
 class all_pokemons : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentAllPokemonsBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: MainActivityViewModel by viewModels()
+    private lateinit var adapter: PokemonAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAllPokemonsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.view.setOnClickListener { viewModel.requestPokemonList(30) }
+        setupRecyclerView()
+        observeViewModel()
+        if (viewModel.pokemonList.value.isNullOrEmpty()) {
+            viewModel.requestPokemonList(30)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_pokemons, container, false)
+    private fun setupRecyclerView() {
+        adapter = PokemonAdapter()
+        adapter.setListener(object : OnPokemonListener {
+            override fun onClick(p: PokemonEntity) {
+                viewModel.requestPokemon(p.name)
+            }
+        })
+
+        binding.recyclerListPokemons.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.recyclerListPokemons.adapter = adapter
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment all_pokemons.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            all_pokemons().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun observeViewModel() {
+        viewModel.pokemonList.observe(viewLifecycleOwner) { lista ->
+            adapter.updatepokemonList(lista)
+        }
+        viewModel.errorMessage.observe(viewLifecycleOwner) { msg ->
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+        }
+        viewModel.pokemonDetails.observe(viewLifecycleOwner) { poke ->
+            if (poke == null) return@observe
+            val intent = Intent(requireContext(), tela_pokemon::class.java).apply {
+                putExtra("Name", poke.name)
+                putExtra("Id", poke.id)
+                putExtra("Types", poke.types.joinToString(", ") { it.type.name })
+                putExtra(
+                    "Stats",
+                    poke.stats.joinToString(", ") { "${it.stat.name}: ${it.baseStat}" })
+                putExtra("ImageUrl", poke.sprites.other.officialArtwork.frontDefault)
             }
+            startActivity(intent)
+            viewModel.detalhesAbertos()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

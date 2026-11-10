@@ -17,11 +17,19 @@ interface PokemonDao {
     @Delete
     fun delete(p: Pokemon)
 
-    @Query("SELECT * FROM Pokemons Where favorito = true")
-    fun getProdutosDisponiveis(): List<Pokemon>
+    @Query("SELECT * FROM Pokemons Where favorito = 1")
+    fun getFavoritePokemons(): List<Pokemon>?
 
     @Query("SELECT * FROM Pokemons")
-    fun getAllPokemons():List<Pokemon>?
+    fun getAllPokemons():List<Pokemon>
+
+    @Query("SELECT * FROM Pokemons Where id = :id")
+    fun getPokemonById(id: Long): Pokemon?
+
+    @Query("DELETE FROM Pokemons WHERE id = :id")
+    fun deleteById(id: Long)
+
+
 }
 
 

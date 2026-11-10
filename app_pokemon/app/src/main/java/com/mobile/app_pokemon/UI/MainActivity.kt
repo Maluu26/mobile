@@ -10,9 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.mobile.app_pokemon.BuscaFragment
 import com.mobile.app_pokemon.R
+import com.mobile.app_pokemon.adapter.PokemonAdapter
 import com.mobile.app_pokemon.all_pokemons
 import com.mobile.app_pokemon.databinding.ActivityMainBinding
+import com.mobile.app_pokemon.databinding.FragmentAllPokemonsBinding
+import com.mobile.app_pokemon.entity.PokemonEntity
 import com.mobile.app_pokemon.fragment_favoritos
+import com.mobile.app_pokemon.viewModel.MainActivityViewModel
+import com.mobile.app_pokemon.listener.OnPokemonListener
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var binding: ActivityMainBinding
@@ -51,6 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if(R.id.square == view.id){
             navegarPara(all_pokemons())
         }
+
     }
     fun navegarPara(fragment: Fragment) {
         supportFragmentManager.commit {
