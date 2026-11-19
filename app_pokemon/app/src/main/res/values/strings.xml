@@ -22,4 +22,7 @@
     <string name="subscribe_screen">Criar Conta</string>
     <string name="subscribe_hint">Não tem conta? Cadastre-se</string>
     <string name="nick_box">Digite o seu apelido</string>
+    <string name="aba_busca">Buscar</string>
+    <string name="aba_favoritos">Favoritos</string>
+    <string name="aba_todos">Todos</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/buscaFragment"
+        android:icon="@drawable/icone_busca"
+        android:title="@string/aba_busca" />
+    <item android:id="@+id/fragment_favoritos"
+        android:icon="@drawable/icone_favoritos"
+        android:title="@string/aba_favoritos" />
+    <item android:id="@+id/all_pokemons"
+        android:icon="@drawable/icone_todos"
+        android:title="@string/aba_todos" />
+</menu>

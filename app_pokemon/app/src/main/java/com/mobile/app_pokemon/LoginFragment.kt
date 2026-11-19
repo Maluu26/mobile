@@ -36,8 +36,9 @@ class LoginFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         observeViewModel()
         if(auth.currentUser != null){
-            auth.signOut()
-            Toast.makeText(requireContext(), "Já tem user", Toast.LENGTH_SHORT).show()
+            //auth.signOut()
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+
         }
         binding!!.login.setOnClickListener {
             viewModel.loginUser(binding!!.email.text.toString(), binding!!.senha.text.toString())

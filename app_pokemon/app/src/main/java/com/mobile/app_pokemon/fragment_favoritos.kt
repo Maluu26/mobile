@@ -1,7 +1,9 @@
 package com.mobile.app_pokemon
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -62,7 +64,19 @@ class fragment_favoritos : Fragment() {
             }
 
             override fun onClickFav(p: Pokemon) {
-                viewModel.removeFilled(p.nome)
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Desfavoritando Pokemon")
+                    .setMessage("Tem certeza que deseja tirar ${p.nome} dos seus favoritos?")
+                    .setPositiveButton("Sim", { dialog, bt ->
+                        viewModel.removeFilled(p.nome)
+
+                    })
+                    .setNegativeButton("Não", { dialog, bt ->
+
+
+                    })
+                    .create()
+                    .show()
             }
         })
         binding.recyclerListPokemons.layoutManager = LinearLayoutManager(requireContext())
@@ -70,6 +84,11 @@ class fragment_favoritos : Fragment() {
     }
 
     private fun observeViewModel() {
+        viewModel.message.observe(viewLifecycleOwner) { msg ->
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+        }
+
+
         viewModel.favList.observe(viewLifecycleOwner) { lista ->
             adapter.updatepokemonList(lista)
         }

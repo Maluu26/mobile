@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.mobile.app_pokemon.UI.AuthActivity
 import com.mobile.app_pokemon.UI.MainActivity
 import com.mobile.app_pokemon.UI.tela_pokemon
 import com.mobile.app_pokemon.databinding.FragmentAllPokemonsBinding
@@ -21,6 +23,9 @@ class BuscaFragment : Fragment() {
     private var _binding: FragmentBuscaBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainActivityViewModel by viewModels()
+
+    private val auth = FirebaseAuth.getInstance()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,6 +40,14 @@ class BuscaFragment : Fragment() {
         observeViewModel()
         binding.buscaBotao.setOnClickListener {
             viewModel.requestPokemon(binding.pokeBusca.text.toString())
+        }
+        binding.pokeImg.setOnLongClickListener {
+            auth.signOut()
+            // volta para o Login e limpa a pilha: o "voltar" não retorna para a Main
+            val intent = Intent(requireContext(), AuthActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            true   // o long click precisa devolver um Boolean: true = "tratei o clique"
         }
     }
     private fun observeViewModel() {

@@ -37,7 +37,7 @@ class SubscribeFragment : Fragment() {
             viewModel.subscribeUser(binding!!.nome.text.toString(),binding!!.nick.text.toString(),binding!!.email.text.toString(), binding!!.senha.text.toString(),binding!!.senha2.text.toString())
         }
         binding!!.arrowBack.setOnClickListener({
-            findNavController().navigate(R.id.action_subscribeFragment_to_loginFragment)
+            findNavController().popBackStack()
         })
 
     }

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteConstraintException
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.snackbar.Snackbar
 import com.mobile.app_pokemon.Repository.FavoritosRepository
 import com.mobile.app_pokemon.data.entity.Pokemon
 import com.mobile.app_pokemon.data.room.AppDatabase
@@ -42,6 +43,8 @@ class PokemonViewModel(application: Application) : AndroidViewModel(application)
         if(_isFav.value==true){
             favApi.deleteFav(name, onSucesso = {msg -> _mesg.value = msg}, onErro = {msg -> _mesg.value = msg})
             _isFav.value = false
+
+
         }else
         {   val p = Pokemon(id, name, url, true)
             favApi.savePokemon(p)

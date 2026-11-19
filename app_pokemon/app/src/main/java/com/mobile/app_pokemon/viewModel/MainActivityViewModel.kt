@@ -31,7 +31,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
     private val _message = MutableLiveData<String>()
-    val message: LiveData<String> get() = _errorMessage
+    val message: LiveData<String> get() = _message
 
     private val _pokemonDetails = MutableLiveData<PokemonDetails?>()
     val pokemonDetails: LiveData<PokemonDetails?> get() = _pokemonDetails
@@ -142,9 +142,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
        }
 
        fun removeFilled(nome: String) {
-           favApi.deleteFav(nome, onSucesso = {msg -> _message.value = msg},
-               onErro = {msg -> _message.value = msg})
-           getFavoritePokemons()
+           favApi.deleteFav(nome,
+               onSucesso = { msg ->
+                   _message.value = msg
+                   getFavoritePokemons()   // só recarrega depois que o Firestore apagou
+               },
+               onErro = { msg -> _message.value = msg })
        }
 
 }

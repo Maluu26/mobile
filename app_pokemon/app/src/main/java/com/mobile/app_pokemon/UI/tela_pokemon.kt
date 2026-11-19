@@ -11,16 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavArgs
 import androidx.navigation.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.mobile.app_pokemon.R
 import com.mobile.app_pokemon.databinding.ActivityTelaPokemonBinding
 import com.mobile.app_pokemon.viewModel.PokemonViewModel
 
 class tela_pokemon : AppCompatActivity(), View.OnClickListener{
     private lateinit var binding: ActivityTelaPokemonBinding;
-
 
     private val args by navArgs<tela_pokemonArgs>()
 
@@ -115,9 +114,22 @@ class tela_pokemon : AppCompatActivity(), View.OnClickListener{
                 binding.isFav.setImageResource(R.drawable.heart_svgrepo_com)
             }
         }
+        viewModel.mesg.observe(this){msg   ->
+            val snack = Snackbar.make(binding.root, msg, Snackbar.LENGTH_SHORT)
+            snack.setTextMaxLines(1)
+
+            snack.setAction("Desfeito!", View.OnClickListener {
+                viewModel.alternateFilled(args.id, args.name, args.imgUrl)
+                Snackbar.make(binding.root, "Desfazer", Snackbar.LENGTH_SHORT).show()
+            })
+
+            snack.show()
+        }
     }
     override fun onClick(v: View) {
-        if(v.id == R.id.back_arrow){finish()}
+        if (v.id == R.id.back_arrow) {
+            onBackPressedDispatcher.onBackPressed()
+        }
         if(v.id== R.id.is_fav){
             viewModel.alternateFilled(args.id, args.name, args.imgUrl)
         }
