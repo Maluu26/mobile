@@ -2,6 +2,7 @@ package com.mobile.app_pokemon.Repository
 
 import android.content.Context
 import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobile.app_pokemon.client.Cliente
 import com.mobile.app_pokemon.data.room.AppDatabase
 import com.mobile.app_pokemon.entity.PokemonDetails
@@ -13,7 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PokemonRepository(context: Context){
-    
+
     val service = Cliente.createService(PokemonService::class.java)
 
     fun requestPokemonList(limit: Int = 30, offset: Int = 30, onSucesso: (List<PokemonEntity>) -> Unit,

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.mobile.app_pokemon.UI.MainActivity
 import com.mobile.app_pokemon.UI.tela_pokemon
 import com.mobile.app_pokemon.databinding.FragmentAllPokemonsBinding
@@ -39,14 +40,14 @@ class BuscaFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.pokemonDetails.observe(viewLifecycleOwner) { poke ->
             if (poke == null) return@observe
-            val intent = Intent(requireContext(), tela_pokemon::class.java).apply {
-                putExtra("Name", poke.name)
-                putExtra("Id", poke.id)
-                putExtra("Types", poke.types.joinToString(", ") { it.type.name })
-                putExtra("Stats", poke.stats.joinToString(", ") { "${it.stat.name}: ${it.baseStat}" })
-                putExtra("ImageUrl", poke.sprites.other.officialArtwork.frontDefault)
-            }
-            startActivity(intent)
+            val action = BuscaFragmentDirections.actionBuscaFragmentToTelaPokemon(
+                poke.id,
+                poke.name,
+                poke.types.joinToString(", ") { it.type.name },
+                poke.stats.joinToString(", ") { "${it.stat.name}: ${it.baseStat}" },
+                poke.sprites.other.officialArtwork.frontDefault
+            )
+            findNavController().navigate(action)
             viewModel.detalhesAbertos()
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) { msg ->

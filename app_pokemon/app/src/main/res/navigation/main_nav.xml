@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/buscaFragment">
+    <fragment
+        android:id="@+id/all_pokemons"
+        android:name="com.mobile.app_pokemon.all_pokemons"
+        android:label="fragment_all_pokemons"
+        tools:layout="@layout/fragment_all_pokemons" >
+        <action
+            android:id="@+id/action_all_pokemons_to_buscaFragment"
+            app:destination="@id/buscaFragment" />
+        <action
+            android:id="@+id/action_all_pokemons_to_fragment_favoritos2"
+            app:destination="@id/fragment_favoritos" />
+        <action
+            android:id="@+id/action_all_pokemons_to_tela_pokemon"
+            app:destination="@id/tela_pokemon" />
+    </fragment>
+    <fragment
+        android:id="@+id/buscaFragment"
+        android:name="com.mobile.app_pokemon.BuscaFragment"
+        android:label="fragment_busca"
+        tools:layout="@layout/fragment_busca" >
+        <action
+            android:id="@+id/action_buscaFragment_to_fragment_favoritos2"
+            app:destination="@id/fragment_favoritos" />
+        <action
+            android:id="@+id/action_buscaFragment_to_all_pokemons"
+            app:destination="@id/all_pokemons" />
+        <action
+            android:id="@+id/action_buscaFragment_to_tela_pokemon"
+            app:destination="@id/tela_pokemon" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_favoritos"
+        android:name="com.mobile.app_pokemon.fragment_favoritos"
+        android:label="fragment_favoritos" >
+        <action
+            android:id="@+id/action_fragment_favoritos_to_buscaFragment"
+            app:destination="@id/buscaFragment" />
+        <action
+            android:id="@+id/action_fragment_favoritos_to_all_pokemons"
+            app:destination="@id/all_pokemons" />
+        <action
+            android:id="@+id/action_fragment_favoritos_to_tela_pokemon"
+            app:destination="@id/tela_pokemon" />
+    </fragment>
+    <activity
+        android:id="@+id/tela_pokemon"
+        android:name="com.mobile.app_pokemon.UI.tela_pokemon"
+        android:label="tela_pokemon" >
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="types"
+            app:argType="string" />
+        <argument
+            android:name="stats"
+            app:argType="string" />
+        <argument
+            android:name="imgUrl"
+            app:argType="string" />
+    </activity>
+</navigation>

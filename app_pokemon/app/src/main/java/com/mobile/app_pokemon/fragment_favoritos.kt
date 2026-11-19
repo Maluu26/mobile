@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,7 +62,7 @@ class fragment_favoritos : Fragment() {
             }
 
             override fun onClickFav(p: Pokemon) {
-                viewModel.removeFilled(p.id)
+                viewModel.removeFilled(p.nome)
             }
         })
         binding.recyclerListPokemons.layoutManager = LinearLayoutManager(requireContext())
@@ -74,16 +75,14 @@ class fragment_favoritos : Fragment() {
         }
         viewModel.pokemonDetails.observe(viewLifecycleOwner) { poke ->
             if (poke == null) return@observe
-            val intent = Intent(requireContext(), tela_pokemon::class.java).apply {
-                putExtra("Name", poke.name)
-                putExtra("Id", poke.id)
-                putExtra("Types", poke.types.joinToString(", ") { it.type.name })
-                putExtra(
-                    "Stats",
-                    poke.stats.joinToString(", ") { "${it.stat.name}: ${it.baseStat}" })
-                putExtra("ImageUrl", poke.sprites.other.officialArtwork.frontDefault)
-            }
-            startActivity(intent)
+            val action = fragment_favoritosDirections.actionFragmentFavoritosToTelaPokemon(
+                poke.id,
+                poke.name,
+                poke.types.joinToString(", ") { it.type.name },
+                poke.stats.joinToString(", ") { "${it.stat.name}: ${it.baseStat}" },
+                poke.sprites.other.officialArtwork.frontDefault
+            )
+            findNavController().navigate(action)
             viewModel.detalhesAbertos()
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) { msg ->

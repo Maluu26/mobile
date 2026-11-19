@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavArgs
+import androidx.navigation.navArgs
 import com.bumptech.glide.Glide
 import com.mobile.app_pokemon.R
 import com.mobile.app_pokemon.databinding.ActivityTelaPokemonBinding
@@ -18,6 +20,9 @@ import com.mobile.app_pokemon.viewModel.PokemonViewModel
 
 class tela_pokemon : AppCompatActivity(), View.OnClickListener{
     private lateinit var binding: ActivityTelaPokemonBinding;
+
+
+    private val args by navArgs<tela_pokemonArgs>()
 
     private lateinit var viewModel: PokemonViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +41,11 @@ class tela_pokemon : AppCompatActivity(), View.OnClickListener{
         }
         binding.backArrow.setOnClickListener(this)
         binding.isFav.setOnClickListener(this)
-        val nome = intent.getStringExtra("Name").orEmpty()
-        val imageUrl = intent.getStringExtra("ImageUrl")
-        val id = intent.getLongExtra("Id", -1L)
-
+        val nome = args.name
+        val imageUrl = args.imgUrl
+        val id = args.id
         setObservers()
-        viewModel.adjustFav(id)
+        viewModel.adjustFav(nome)
 
         findViewById<TextView>(R.id.nome_poke).text = nome.replaceFirstChar { it.uppercase() }
 
@@ -51,8 +55,8 @@ class tela_pokemon : AppCompatActivity(), View.OnClickListener{
             .error(R.drawable.circle_svgrepo_com)
             .into(findViewById<ImageView>(R.id.pokemon))
 
-        mostrarTipos(intent.getStringExtra("Types").orEmpty())
-        mostrarStats(intent.getStringExtra("Stats").orEmpty())
+        mostrarTipos(args.types)
+        mostrarStats(args.stats)
     }
 
     private fun mostrarTipos(texto: String) {
@@ -113,12 +117,9 @@ class tela_pokemon : AppCompatActivity(), View.OnClickListener{
         }
     }
     override fun onClick(v: View) {
-        val nome = intent.getStringExtra("Name").orEmpty()
-        val imageUrl = intent.getStringExtra("ImageUrl").orEmpty()
-        val id = intent.getLongExtra("Id", -1L)
         if(v.id == R.id.back_arrow){finish()}
         if(v.id== R.id.is_fav){
-            viewModel.alternateFilled(id, nome, imageUrl)
+            viewModel.alternateFilled(args.id, args.name, args.imgUrl)
         }
     }
 }

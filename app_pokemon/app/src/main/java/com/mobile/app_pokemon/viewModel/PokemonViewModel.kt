@@ -17,17 +17,19 @@ class PokemonViewModel(application: Application) : AndroidViewModel(application)
 
     private var _savedMsg = MutableLiveData<Int>()
     val savedMsg: LiveData<Int> get() = _savedMsg
+
+    private var _mesg = MutableLiveData<String>()
+    val mesg: LiveData<String> get() = _mesg
     val favApi = FavoritosRepository(getApplication())
-    fun adjustFav(id: Long){
+    fun adjustFav(nome: String){
         var resp: Boolean
         try {
-            resp = favApi.ehFavorito(id)
+            favApi.ehFavorito(nome, onResultado = {exists -> _isFav.value = exists})
 
-            if(resp == true){
-                _isFav.value = true
+            if( isFav.value == true){
+
                 _savedMsg.value = 1
             }else{
-                _isFav.value = false
                 _savedMsg.value = 0
             }
 
@@ -38,11 +40,11 @@ class PokemonViewModel(application: Application) : AndroidViewModel(application)
     }
     fun alternateFilled(id: Long, name: String, url: String){
         if(_isFav.value==true){
-            favApi.remover(id)
+            favApi.deleteFav(name, onSucesso = {msg -> _mesg.value = msg}, onErro = {msg -> _mesg.value = msg})
             _isFav.value = false
         }else
         {   val p = Pokemon(id, name, url, true)
-            favApi.adicionar(p)
+            favApi.savePokemon(p)
             _isFav.value = true
         }
 

@@ -13,4 +13,13 @@
     <string name="stat_atq_es">Atq. Es.:</string>
     <string name="stat_def_es">Def. Es.:</string>
     <string name="stat_velocidade">Velocidade:</string>
+    <string name="email">Digite o seu email</string>
+    <string name="senha">Digite o sua senha</string>
+    <string name="nome_box">Digite o seu nome</string>
+    <string name="confirma_senha">Confirme a sua senha</string>
+    <string name="login">Faça o login</string>
+    <string name="cadastro">Cadastre-se</string>
+    <string name="subscribe_screen">Criar Conta</string>
+    <string name="subscribe_hint">Não tem conta? Cadastre-se</string>
+    <string name="nick_box">Digite o seu apelido</string>
 </resources>

@@ -30,6 +30,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val savedMsg: LiveData<Int> get() = _savedMessage
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> get() = _errorMessage
 
     private val _pokemonDetails = MutableLiveData<PokemonDetails?>()
     val pokemonDetails: LiveData<PokemonDetails?> get() = _pokemonDetails
@@ -133,23 +135,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
        )
    }
        fun getFavoritePokemons() {
-
-           var resp: List<Pokemon>?
-           try {
-               resp = favApi.listar()
-               if (resp == null) {
-                   _savedMessage.value = 2
-               } else {
-                   _favList.value = resp
-                   _savedMessage.value = 1
-               }
-           } catch (e: SQLiteConstraintException) {
-               _savedMessage.value = 3
-           }
+           favApi.getPokemons(
+               onSucesso = { lista -> _favList.value = lista },
+               onErro = { msg -> _errorMessage.value = msg }
+           )
        }
 
-       fun removeFilled(id: Long) {
-           favApi.remover(id)
+       fun removeFilled(nome: String) {
+           favApi.deleteFav(nome, onSucesso = {msg -> _message.value = msg},
+               onErro = {msg -> _message.value = msg})
            getFavoritePokemons()
        }
 

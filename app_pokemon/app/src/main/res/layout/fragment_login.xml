@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/fragment_login"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".LoginFragment"
+    ><ImageView
+    app:layout_goneMarginTop="50dp"
+    android:layout_marginTop="60dp"
+    android:id="@+id/pokebola"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:src="@drawable/pokeball_pokemon_svgrepo_com"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    />
+<EditText
+    android:id="@+id/email"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/pokebola"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:layout_marginTop="50dp"
+    android:layout_marginHorizontal="25dp"
+    android:background="@drawable/bg_editext"
+    android:padding="14dp"
+    android:hint="@string/email"
+    android:inputType="text"
+    android:textColorHint="@color/search_header"
+    />
+<EditText
+    android:id="@+id/senha"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/email"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:layout_marginTop="25dp"
+    android:layout_marginHorizontal="25dp"
+    android:background="@drawable/bg_editext"
+    android:padding="14dp"
+    android:hint="@string/senha"
+    android:inputType="text"
+    android:textColorHint="@color/search_header"
+    />
+<Button
+    android:id="@+id/login"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/login"
+    app:layout_constraintTop_toBottomOf="@id/senha"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:backgroundTint="@color/white"
+    android:layout_marginTop="30dp"
+    android:textColor="@color/search_header"
+    />
+    <TextView
+        android:id="@+id/subscribe_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subscribe_screen"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
